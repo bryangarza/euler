@@ -1,36 +1,16 @@
 object Euler3 {
   def main(args: Array[String]) {
 
-    val limit = 600851475143L
+    var limit = 600851475143L
 
-    var n = (limit / 2) + 1
-    while(isPrime(n) == false || limit % n != 0 ) {
-      n -= 1
-    }
+    lazy val primes: Stream[Long] =
+    Stream.cons(2,
+      primes.map(x => {var tmp = x
+        (while ((limit % tmp) != 0 && limit != 1) { tmp += 1 });
+        limit = limit / tmp;
+        tmp}))
 
-    println(n)
+    print(primes.take(10).last)
 
-    def isPrime(n: Long) = {
-
-
-      var denom = n / 2
-      var prime = true
-
-      while(denom > 5 && prime == true) {
-        if(n % denom == 0) {
-          prime == false
-        }
-        else {
-          denom -= denom
-        }
-      }
-
-      if (prime == false) {
-        println(n + " is not prime")
-      }
-
-      prime
-
-    }
   }
 }
